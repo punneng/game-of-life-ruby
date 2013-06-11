@@ -27,7 +27,8 @@ class Game
           neigbors = []
           [-1,0,1].each do |y|
             [-1,0,1].each do |x|
-              # take this to a new function for test
+              # NOTE: this spagetti code can be split to a new function
+              #       and testable
               next if (x == 0) && (y == 0)
               py = l + y
               px = e + x
