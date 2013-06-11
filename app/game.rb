@@ -46,7 +46,7 @@ class Game
       (1..repeat).each do |i|
         grid = fetch(grid)
         render_grid(:graphic, grid).each { |line| puts line.to_s }
-        puts "----------------------------------------------------"
+        puts " "
         sleep delay
       end
     end
