@@ -7,16 +7,16 @@ class Game
     }
 
     def render_grid(type, tiles)
-      object_grid = []
+      result= []
       block = RENDER_TPYES.fetch(type, nil)
 
-      return object_grid unless block
+      return result unless block
 
       tiles.each do |line|
         line_stack = line.map &block
-        object_grid.push line_stack
+        result.push line_stack
       end
-      object_grid
+      result
     end
 
     def fetch(tiles)
