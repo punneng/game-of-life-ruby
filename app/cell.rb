@@ -1,6 +1,4 @@
 class Cell
-  attr_reader :live
-
   class << self
     def dead
       new(false)

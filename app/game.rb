@@ -7,16 +7,10 @@ class Game
     }
 
     def render_grid(type, tiles)
-      result= []
       block = RENDER_TPYES.fetch(type, nil)
-
       return result unless block
 
-      tiles.each do |line|
-        line_stack = line.map &block
-        result.push line_stack
-      end
-      result
+      tiles.inject([]) { |result, line| result.push(line.map(&block)) }
     end
 
     def fetch(tiles)
