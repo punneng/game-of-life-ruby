@@ -1,4 +1,14 @@
 class Cell
+  SUB_ROLES = {
+    true:   Proc.new { Cell.live },
+    false:  Proc.new { Cell.dead }
+  }
+
+  ROLES = { 
+    true:   Proc.new { |count| SUB_ROLES[[2,3].include?(count).to_s.to_sym].call },
+    false:  Proc.new { |count| SUB_ROLES[count.eql?(3).to_s.to_sym].call }
+  }
+
   class << self
     def dead
       new(false)
@@ -9,31 +19,16 @@ class Cell
     end
   end
 
-  def initialize(live=false)
-    @live = live
+  def initialize(state=false)
+    @state = state
   end
 
   def alive?
-    @live
+    @state
   end
 
   def next_state(neighbors)
-    obj = self
-    count = neighbors.inject(0) { |sum, cell| sum += 1 if cell.alive?; sum }
-    if alive?
-      (count != 2) && (count != 3) ? kill : self
-    else
-      count == 3 ? resurrect : self
-    end
-  end
-
-  protected
-
-  def kill
-    Cell.dead
-  end
-
-  def resurrect
-    Cell.live
+    count = neighbors.inject(0) { |sum ,neighbor| neighbor.alive? and sum += 1; sum }
+    ROLES[self.alive?.to_s.to_sym].call(count)
   end
 end
